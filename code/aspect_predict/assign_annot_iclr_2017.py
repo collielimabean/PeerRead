@@ -18,7 +18,7 @@ def get_annots_dic(data_dir='./', input_filename = 'annotation_full.tsv'):
         #print 'Keys[%d]'%(len(tks)),tks
         continue
       if len(tks) != 12:
-        print 'WRONG token length',len(tks), tks
+        print('WRONG token length',len(tks), tks)
         continue
 
       aspect_dic = {}
@@ -50,12 +50,12 @@ def main():
 
   # Loading annotaions
   annots = get_annots_dic()
-  print 'Loaded annots: %d papers and %d reviews'%(len(annots), sum([len(v) for k,v in annots.items() ]))
+  print('Loaded annots: %d papers and %d reviews'%(len(annots), sum([len(v) for k,v in list(annots.items()) ])))
 
   # Loading reviews, merging them with annotations, and saving into new directory
   data_dir = "../../data/iclr_2017" # args[1]   #train/reviews
   datasets = ['train','dev','test']
-  print 'Reading reviews from...'
+  print('Reading reviews from...')
   for dataset in datasets:
 
     cnt_p, cnt_r = 0, 0
@@ -85,7 +85,7 @@ def main():
           if r_annotated['OTHER_KEYS'] == r_original.OTHER_KEYS:
 
             r_combined = r_original
-            for k,v in r_annotated.items():
+            for k,v in list(r_annotated.items()):
               if k in ['RECOMMENDATION_UNOFFICIAL','SUBSTANCE','APPROPRIATENESS','MEANINGFUL_COMPARISON','SOUNDNESS_CORRECTNESS','ORIGINALITY','CLARITY','IMPACT']:
                 setattr(r_combined, k, v)
             setattr(r_combined, 'IS_ANNOTATED',True)
@@ -101,9 +101,9 @@ def main():
 
       # save to /reviews_annotated
       json.dump(paper.to_json_object(), open(review_annotated_dir+'/%s.json'%(paper.ID),'w'))
-      print paper.ID, len(paper.REVIEWS)
+      print(paper.ID, len(paper.REVIEWS))
       cnt_p += 1
-    print dataset, cnt_p, cnt_r
+    print(dataset, cnt_p, cnt_r)
 
   # note that we replace reviews/ with reviews_annotated/ to reduce duplicates now
 

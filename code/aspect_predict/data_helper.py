@@ -45,13 +45,13 @@ def load_embeddings(vocab, load=False):
   embedding_var = np.random.normal(0.0, 0.01,[len(vocab), embedding_size] )
   no_embeddings = 0
 
-  for word,wid in vocab.items():
+  for word,wid in list(vocab.items()):
     try:
       embedding_var[wid,:] = glove_embedding[word]
     except KeyError:
       no_embeddings +=1
       continue
-  print("num embeddings with no value:{} / {}".format(no_embeddings, len(vocab)))
+  print(("num embeddings with no value:{} / {}".format(no_embeddings, len(vocab))))
   return np.array(embedding_var, dtype=np.float32)
 
 

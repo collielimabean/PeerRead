@@ -18,7 +18,7 @@ def get_data(features_if, scale=False, n_features = None):
 
 def main(args, scale=False):
     if len(args) < 5:
-        print("Usage:",args[0],"<train if> <dev if> <test if> <of>")
+        print(("Usage:",args[0],"<train if> <dev if> <test if> <of>"))
         return -1
 
     ###########################
@@ -36,13 +36,13 @@ def main(args, scale=False):
     train_counter = Counter(train_labels)
     dev_counter = Counter(dev_labels)
     test_counter = Counter(test_labels)
-    print train_counter, train_features.shape
-    print dev_counter, dev_features.shape
-    print test_counter, test_features.shape
-    print("Train majority: {}, Dev majority: {} Test majorit: {}".format(
+    print(train_counter, train_features.shape)
+    print(dev_counter, dev_features.shape)
+    print(test_counter, test_features.shape)
+    print(("Train majority: {}, Dev majority: {} Test majorit: {}".format(
       round(100.0*train_counter[0]/(train_counter[0]+train_counter[1]),3),
       round(100.0*dev_counter[0]/(dev_counter[0]+dev_counter[1]),3),
-      round(100.0*test_counter[0]/(test_counter[0]+test_counter[1]),3)))
+      round(100.0*test_counter[0]/(test_counter[0]+test_counter[1]),3))))
 
 
     ###########################
@@ -61,7 +61,7 @@ def main(args, scale=False):
       neural_network.MLPClassifier(alpha=1),
       ensemble.AdaBoostClassifier()]
     random.shuffle(clfs)
-    print 'Total number of classifiers',len(clfs)
+    print('Total number of classifiers',len(clfs))
 
     ###########################
     # training (CV) and testing
@@ -74,21 +74,21 @@ def main(args, scale=False):
         best_classifier = clf
         best_v = v
 
-    print("Best v:",best_v*100.0,", Best clf: ",best_classifier)
+    print(("Best v:",best_v*100.0,", Best clf: ",best_classifier))
     best_classifier.fit(train_features, train_labels)
 
     # train
     train_y_hat = best_classifier.predict(train_features)
     train_score = 100.0 * sum(train_labels == train_y_hat) / len(train_y_hat)
-    print 'Train accuracy: %.2f in %d examples' %(round(train_score,3), sum(train_labels))
+    print('Train accuracy: %.2f in %d examples' %(round(train_score,3), sum(train_labels)))
     # dev
     dev_y_hat = best_classifier.predict(dev_features)
     dev_score = 100.0 * sum(dev_labels == dev_y_hat) / len(dev_y_hat)
-    print 'Dev accuracy: %.2f in %d examples' %(round(dev_score,3), sum(dev_labels))
+    print('Dev accuracy: %.2f in %d examples' %(round(dev_score,3), sum(dev_labels)))
     # test
     test_y_hat = best_classifier.predict(test_features)
     test_score = 100.0 * sum(test_labels == test_y_hat) / len(test_y_hat)
-    print 'Test accuracy: %.2f in %d examples' %(round(test_score,3),sum(test_labels))
+    print('Test accuracy: %.2f in %d examples' %(round(test_score,3),sum(test_labels)))
 
 
 if __name__ == "__main__": sys.exit(main(sys.argv))

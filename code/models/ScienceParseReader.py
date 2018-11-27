@@ -5,9 +5,9 @@ sys.setdefaultencoding('utf8')
 
 import sys,io
 import json, glob
-from Review import Review
-from Paper import Paper
-from ScienceParse import ScienceParse
+from .Review import Review
+from .Paper import Paper
+from .ScienceParse import ScienceParse
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 class ScienceParseReader:

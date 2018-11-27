@@ -1,5 +1,5 @@
 import re,io,json,sys
-from Review import Review
+from .Review import Review
 
 class Paper:
   """A paper class, which contains relevant fields and a list of reviews"""
@@ -74,7 +74,7 @@ class Paper:
           data = json.loads(line.strip())
           datas.append(data)
         except Exception as e:
-          print line
+          print(line)
           continue
     if len(datas)==0: return None
     data = datas[-1]

@@ -26,7 +26,7 @@ class MeanEmbeddingVectorizer(object):
     # if a text is empty we should return a vector of zeros
     # with the same dimensionality as all the other vectors
     self.dim = len(word2vec['a'])
-    print 'Dimension: ',self.dim
+    print('Dimension: ',self.dim)
 
   def fit(self, X, y=None):
     return self
@@ -58,7 +58,7 @@ class TFIDFEmbeddingVectorizer(object):
     max_idf = max(tfidf.idf_)
     self.word2weight = defaultdict(
       lambda: max_idf,
-      [(w, tfidf.idf_[i]) for w, i in tfidf.vocabulary_.items()])
+      [(w, tfidf.idf_[i]) for w, i in list(tfidf.vocabulary_.items())])
 
     return self
 
