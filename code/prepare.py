@@ -66,7 +66,7 @@ def main(args):
   if not os.path.exists(science_dir):
     print('Parsing papers usnig science-parser...')
     os.makedirs(science_dir)
-    os.system('java -Xmx6g -jar lib/science-parse-cli-assembly-1.2.9-SNAPSHOT.jar %s -o %s'%(pdf_dir,science_dir))
+    os.system('java -Xmx6g -jar lib/science-parse-cli-assembly-*.jar %s -o %s'%(pdf_dir,science_dir))
     science_files = glob.glob(science_dir+'/*.pdf.json')
   else:
     print('Reading parsed science parses...')
