@@ -8,7 +8,7 @@ DATAS=("arxiv/cs.cl" "arxiv/cs.lg" "arxiv/cs.ai" "nips/nips_2013" "nips/nips_201
 for DATA in "${DATAS[@]}"
 do
   echo "preparing dataset: " $DATA
-  python prepare.py $DATADIR$DATA
+  python3 prepare.py $DATADIR$DATA
 done
 
 

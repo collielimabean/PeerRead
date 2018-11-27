@@ -13,7 +13,7 @@ for DATASET in "${DATASETS[@]}"
 do
   echo "Extracting feautures..." DATA=$DATADIR DATASET=$DATASET ENCODER=$ENCODER ALL_VOCAB=$MAX_VOCAB HAND_FEATURE=$HAND
   rm -rf $DATADIR/$DATASET/$FEATDIR
-  python featurize.py \
+  python3 featurize.py \
     $DATADIR/$DATASET/reviews/ \
     $DATADIR/$DATASET/parsed_pdfs/ \
     $DATADIR/$DATASET/$FEATDIR \
@@ -25,7 +25,7 @@ done
 
 # 2) run baseline model
 echo "Classigying..." $DATADIR $DATASET $ENCODER $MAX_VOCAB $HAND
-python classify.py \
+python3 classify.py \
   $DATADIR/train/$FEATDIR/features.svmlite_${MAX_VOCAB}_${ENCODER}_${HAND}.txt \
   $DATADIR/dev/$FEATDIR/features.svmlite_${MAX_VOCAB}_${ENCODER}_${HAND}.txt \
   $DATADIR/test/$FEATDIR/features.svmlite_${MAX_VOCAB}_${ENCODER}_${HAND}.txt \
