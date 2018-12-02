@@ -1,7 +1,8 @@
 #!/bin/bash
 #set -x
 
-DATADIR=../../data/iclr_2017
+# DATADIR=../../data/iclr_2017
+DATADIR=../../data/acl_2017
 DATASETS=("train" "dev" "test")
 FEATDIR=dataset
 MAX_VOCAB=False

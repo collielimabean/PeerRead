@@ -1,0 +1,58 @@
+Counter({0.0: 210, 1.0: 139}) (349, 324)
+Counter({0.0: 22, 1.0: 18}) (40, 324)
+Counter({0.0: 23, 1.0: 15}) (38, 324)
+Train majority: 60.172, Dev majority: 55.0 Test majorit: 60.526
+Total number of classifiers 30 
+
+v: 52.74534161490683 , clf:  LogisticRegression(C=0.9, class_weight=None, dual=True, fit_intercept=True,
+          intercept_scaling=1, max_iter=100, multi_class='warn',
+          n_jobs=None, penalty='l2', random_state=None, solver='warn',
+          tol=0.0001, verbose=0, warm_start=False)
+Train accuracy: 40.12 in 139 examples
+Dev accuracy: 45.00 in 18 examples
+Test accuracy: 42.10 in 15 examples 
+
+v: 62.75776397515529 , clf:  LogisticRegression(C=0.9, class_weight=None, dual=False, fit_intercept=True,
+          intercept_scaling=1, max_iter=100, multi_class='warn',
+          n_jobs=None, penalty='l1', random_state=None, solver='warn',
+          tol=0.0001, verbose=0, warm_start=False)
+Train accuracy: 68.77 in 139 examples
+Dev accuracy: 55.00 in 18 examples
+Test accuracy: 68.42 in 15 examples 
+
+v: 55.56935817805383 , clf:  SVC(C=0.9, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='scale', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+Train accuracy: 72.49 in 139 examples
+Dev accuracy: 67.50 in 18 examples
+Test accuracy: 71.05 in 15 examples 
+
+v: 55.02691511387163 , clf:  RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators='warn', n_jobs=None,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+Train accuracy: 99.43 in 139 examples
+Dev accuracy: 62.50 in 18 examples
+Test accuracy: 63.16 in 15 examples 
+
+v: 55.04761904761904 , clf:  AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+Train accuracy: 96.56 in 139 examples
+Dev accuracy: 50.00 in 18 examples
+Test accuracy: 50.00 in 15 examples 
+
+v: 57.590062111801245 , clf:  MLPClassifier(activation='relu', alpha=1, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100,), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=200, momentum=0.9,
+       n_iter_no_change=10, nesterovs_momentum=True, power_t=0.5,
+       random_state=None, shuffle=True, solver='adam', tol=0.0001,
+       validation_fraction=0.1, verbose=False, warm_start=False)
+Train accuracy: 67.33 in 139 examples
+Dev accuracy: 65.00 in 18 examples
+Test accuracy: 73.68 in 15 examples 
+
