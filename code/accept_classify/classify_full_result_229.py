@@ -36,9 +36,12 @@ def main(args, scale=False):
     train_counter = Counter(train_labels)
     dev_counter = Counter(dev_labels)
     test_counter = Counter(test_labels)
-    print("Model Train Test")
-    print(("Majority {} {}".format(
+    print(train_counter, train_features.shape)
+    print(dev_counter, dev_features.shape)
+    print(test_counter, test_features.shape)
+    print(("Train majority: {}, Dev majority: {} Test majorit: {}".format(
       round(100.0*train_counter[0]/(train_counter[0]+train_counter[1]),3),
+      round(100.0*dev_counter[0]/(dev_counter[0]+dev_counter[1]),3),
       round(100.0*test_counter[0]/(test_counter[0]+test_counter[1]),3))))
 
 
@@ -59,7 +62,8 @@ def main(args, scale=False):
       
     other_clfs += [ensemble.RandomForestClassifier(), ensemble.AdaBoostClassifier(), 
                   neural_network.MLPClassifier(alpha=1)]
-
+    print('Total number of classifiers',len(l2_logistic_clfs) + len(l1_logistic_clfs) 
+      + len(svm_rbf_clfs) + len(other_clfs), "\n")
 
     ###########################
     # training (CV) and testing
@@ -69,27 +73,25 @@ def main(args, scale=False):
     for cidx, clf in enumerate(l2_logistic_clfs):
       best_v, best_classifier = select_best_model(clf, train_features, train_labels)
     record_result(best_v, best_classifier, train_features, train_labels, 
-        dev_features, dev_labels, test_features, test_labels, names[0])
+        dev_features, dev_labels, test_features, test_labels)
 
     # Logistic L1 model
     for cidx, clf in enumerate(l1_logistic_clfs):
       best_v, best_classifier = select_best_model(clf, train_features, train_labels)
     record_result(best_v, best_classifier, train_features, train_labels, 
-        dev_features, dev_labels, test_features, test_labels, names[1])
+        dev_features, dev_labels, test_features, test_labels)
 
     # SVM rbf model
     for cidx, clf in enumerate(svm_rbf_clfs):
       best_v, best_classifier = select_best_model(clf, train_features, train_labels)
     record_result(best_v, best_classifier, train_features, train_labels, 
-        dev_features, dev_labels, test_features, test_labels, names[2])
+        dev_features, dev_labels, test_features, test_labels)
 
     # Other models
-    i = 3
     for cidx, clf in enumerate(other_clfs):
       scores = model_selection.cross_val_score(clf, train_features, train_labels, cv=5, n_jobs=8)
       v = sum(scores)*1.0/len(scores)
-      record_result(v, clf, train_features, train_labels, dev_features, dev_labels, test_features, test_labels, names[i])
-      i += 1
+      record_result(v, clf, train_features, train_labels, dev_features, dev_labels, test_features, test_labels)
 
 def select_best_model(clf, train_features, train_labels):
     best_classifier = None
@@ -104,19 +106,21 @@ def select_best_model(clf, train_features, train_labels):
 
 
 def record_result(best_v, best_classifier, train_features, train_labels, dev_features, 
-                dev_labels, test_features, test_labels, model_name):
-
+                dev_labels, test_features, test_labels):
+    print("v:", best_v*100.0,", clf: ", best_classifier)
     best_classifier.fit(train_features, train_labels)
 
     # train
     train_y_hat = best_classifier.predict(train_features)
     train_score = 100.0 * sum(train_labels == train_y_hat) / len(train_y_hat)
-
+    print('Train accuracy: %.2f in %d examples' %(round(train_score,3), sum(train_labels)))
+    # dev
+    dev_y_hat = best_classifier.predict(dev_features)
+    dev_score = 100.0 * sum(dev_labels == dev_y_hat) / len(dev_y_hat)
+    print('Dev accuracy: %.2f in %d examples' %(round(dev_score,3), sum(dev_labels)))
     # test
     test_y_hat = best_classifier.predict(test_features)
     test_score = 100.0 * sum(test_labels == test_y_hat) / len(test_y_hat)
-    
-    print(model_name, "%.2f" %round(train_score,3), "%.2f" %round(test_score,3))
-    
+    print('Test accuracy: %.2f in %d examples' %(round(test_score,3),sum(test_labels)),"\n")
 
 if __name__ == "__main__": sys.exit(main(sys.argv))

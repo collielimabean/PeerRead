@@ -1,0 +1,8 @@
+Model Train Test
+Majority 60.172 60.526
+logistic_l2 41.26 42.10
+logistic_l1 68.48 68.42
+SVM_rbf 72.49 71.05
+random_forest 97.14 63.16
+AdaBoost 96.56 50.00
+neural_network 67.62 63.16
