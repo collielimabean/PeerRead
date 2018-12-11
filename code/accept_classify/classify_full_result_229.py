@@ -51,7 +51,8 @@ def main(args, scale=False):
     l2_logistic_clfs = []
     l1_logistic_clfs = []
     svm_rbf_clfs = []
-    other_clfs = []
+    NN_clfs = [] 
+    ensemble_clfs = []
 
     names = ["logistic_l2", "logistic_l1", "SVM_rbf", "random_forest", "AdaBoost", "neural_network" ]
     
@@ -59,11 +60,14 @@ def main(args, scale=False):
       l2_logistic_clfs.append(linear_model.LogisticRegression(C=c, dual=True))
       l1_logistic_clfs.append(linear_model.LogisticRegression(C=c, penalty='l1'))
       svm_rbf_clfs.append(svm.SVC(kernel='rbf', C=c, gamma = "scale"))
+      for c1 in [x for x in range(1, 3)]:
+          NN_clfs.append(neural_network.MLPClassifier(hidden_layer_sizes= (int(100*c), c1), alpha=1))
+    
+    # NN_clfs.append(neural_network.MLPClassifier(hidden_layer_sizes= (100, 1), alpha=1))
       
-    other_clfs += [ensemble.RandomForestClassifier(), ensemble.AdaBoostClassifier(), 
-                  neural_network.MLPClassifier(alpha=1)]
+    ensemble_clfs += [ensemble.RandomForestClassifier(), ensemble.AdaBoostClassifier()]
     print('Total number of classifiers',len(l2_logistic_clfs) + len(l1_logistic_clfs) 
-      + len(svm_rbf_clfs) + len(other_clfs), "\n")
+      + len(svm_rbf_clfs) + len(NN_clfs) + len(ensemble_clfs), "\n")
 
     ###########################
     # training (CV) and testing
@@ -87,11 +91,19 @@ def main(args, scale=False):
     record_result(best_v, best_classifier, train_features, train_labels, 
         dev_features, dev_labels, test_features, test_labels)
 
-    # Other models
-    for cidx, clf in enumerate(other_clfs):
+   # Ensemble model
+    i = 3
+    for cidx, clf in enumerate(ensemble_clfs):
       scores = model_selection.cross_val_score(clf, train_features, train_labels, cv=5, n_jobs=8)
       v = sum(scores)*1.0/len(scores)
       record_result(v, clf, train_features, train_labels, dev_features, dev_labels, test_features, test_labels)
+      i += 1
+
+  # Neural network model
+    for cidx, clf in enumerate(NN_clfs):
+      best_v, best_classifier = select_best_model(clf, train_features, train_labels)
+    record_result(best_v, best_classifier, train_features, train_labels, 
+      dev_features, dev_labels, test_features, test_labels)
 
 def select_best_model(clf, train_features, train_labels):
     best_classifier = None
